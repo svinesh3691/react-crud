@@ -6,9 +6,12 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers/rootReducer';
-
+import './interceptor';
 const store = createStore(rootReducer, applyMiddleware(thunk));
-console.log(store);
+
+
+
+
 
 ReactDOM.render(
     <Provider store={store}>

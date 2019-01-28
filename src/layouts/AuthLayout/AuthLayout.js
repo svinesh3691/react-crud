@@ -3,16 +3,14 @@ import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import UserList from '../../containers/user/user-list/user-list';
 import Home from '../../containers/home/home';
 import { PrivateRoute } from '../../PrivateRoute';
+import userManage from '../../containers/user/user-manage/user-manage';
 
 class AuthLayout extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
 
     }
     logout() {
-        console.log(this.props);
-        console.log('log out');
         localStorage.removeItem('user');
         this.props.history.push('/login')
 
@@ -33,7 +31,8 @@ class AuthLayout extends Component {
 
                     <Switch>
                         <Route path="/home" name="Homw" component={Home} />
-                        <PrivateRoute dob="265" path="/users" name="Userm List" component={UserList} />
+                        <PrivateRoute path="/users" name="User List" component={UserList} />
+                        <PrivateRoute path="/user/:id" name="User Manage" component={userManage} />
                         <Redirect from="/" to="/home" />
                     </Switch>
 

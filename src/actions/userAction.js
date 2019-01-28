@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const fetchUsersBegin = () => ({
     type: 'FETCH_USERS_BEGIN'
 });
@@ -12,20 +14,59 @@ export const fetchUsersFailure = error => ({
     payload: { error }
 });
 
+
+
+export const selectUserBegin = () => ({
+    type: 'SELECT_USER_BEGIN'
+});
+
+export const selectUserSuccess = user => ({
+    type: 'SELECT_USER_SUCCESS',
+    payload: { user }
+});
+
+export const selectUserFailure = error => ({
+    type: 'SELECT_USER_FAILURE',
+    payload: { error }
+});
+
+
 export function fetchUsers() {
     return dispatch => {
         dispatch(fetchUsersBegin());
-        return fetch("https://reqres.in/api/users?page=1")
-            .then(handleErrors)
-            .then(res => res.json())
-            .then(json => {
-                console.log(json)
-                dispatch(fetchUsersSuccess(json.data));
-                return json.users;
+        return axios("https://reqres.in/api/users?page=1")
+            .then(res => {
+                dispatch(fetchUsersSuccess(res.data.data))
             })
-            .catch(error => dispatch(fetchUsersFailure(error)));
+            .catch(error => {
+                console.log(error);
+
+                dispatch(fetchUsersFailure(error))
+            });
+
     };
 }
+
+
+
+export function selectUser(id) {
+    return dispatch => {
+        dispatch(selectUserBegin());
+        return axios("https://reqres.in/api/users/" + id)
+            .then(res => {
+                dispatch(selectUserSuccess(res.data.data))
+            })
+            .catch(error => {
+                console.log(error);
+
+                dispatch(selectUserFailure(error))
+            });
+
+    };
+}
+
+
+
 
 // Handle HTTP errors since fetch won't.
 function handleErrors(response) {

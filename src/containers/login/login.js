@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class Login extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             username: '',
             password: ''
@@ -12,7 +11,6 @@ class Login extends Component {
 
     login(e) {
         e.preventDefault();
-        console.log(this, this.state.username, this.state.password);
         if (this.state.username === 'svinesh3691' && this.state.password === 'secret') {
             localStorage.setItem('user', this.state.username);
             this.props.history.push('/user')

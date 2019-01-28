@@ -1,17 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchUsers } from "../../../actions/userAction";
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
 
 class UserList extends React.Component {
     componentDidMount() {
-        console.log(this.props)
         this.props.dispatch(fetchUsers());
     }
 
     render() {
 
         const { error, loading, users } = this.props;
-        console.log(users)
         if (error) {
             return <div>Error! {error.message}</div>;
         }
@@ -28,7 +27,7 @@ class UserList extends React.Component {
             </h3>
                 <ul>
                     {users.map(a =>
-                        <li key={a.id}>{a.first_name}</li>
+                        <li key={a.id}>{a.first_name} <Link to={`/user/${a.id}`}>Edit</Link></li>
                     )}
                 </ul>
             </div>
