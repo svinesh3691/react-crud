@@ -2,10 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchUsers } from "../../../actions/userAction";
 import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { bindActionCreators } from "redux";
 
 class UserList extends React.Component {
     componentDidMount() {
-        this.props.dispatch(fetchUsers());
+        this.props.fetchUsers();
     }
 
     render() {
@@ -37,6 +38,10 @@ class UserList extends React.Component {
 
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchUsers
+}, dispatch)
+
 // export default UserList;
 const mapStateToProps = state => {
     return ({
@@ -46,5 +51,5 @@ const mapStateToProps = state => {
     })
 };
 
-export default connect(mapStateToProps)(UserList);
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);
 

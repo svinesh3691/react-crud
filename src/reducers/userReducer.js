@@ -42,7 +42,6 @@ export default function userReducer(state = initialState, action) {
       };
 
     case 'SELECT_USER_SUCCESS':
-    console.log(action.payload.user);
       return {
         ...state,
         selecting: false,

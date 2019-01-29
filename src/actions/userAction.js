@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'react-router-redux'
 
 export const fetchUsersBegin = () => ({
     type: 'FETCH_USERS_BEGIN'
@@ -39,8 +40,6 @@ export function fetchUsers() {
                 dispatch(fetchUsersSuccess(res.data.data))
             })
             .catch(error => {
-                console.log(error);
-
                 dispatch(fetchUsersFailure(error))
             });
 
@@ -57,10 +56,26 @@ export function selectUser(id) {
                 dispatch(selectUserSuccess(res.data.data))
             })
             .catch(error => {
-                console.log(error);
-
                 dispatch(selectUserFailure(error))
             });
+
+    };
+}
+
+
+export function updateUser(id, name, callback) {
+    return dispatch => {
+        axios.put('https://reqres.in/api/users/' + id, {
+            name,
+            job: 'Engineer'
+        }).then((response) => {
+            callback(response);
+            // alert('Success');
+            // dispatch(push('/users'));
+            // this.props.history.push('/users');
+        }).catch(function (error) {
+            console.log(error);
+        });
 
     };
 }

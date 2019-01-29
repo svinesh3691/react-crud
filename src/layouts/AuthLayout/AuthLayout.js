@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import { Route, Switch, Link, Redirect } from 'react-router-dom';
-import UserList from '../../containers/user/user-list/user-list';
-import Home from '../../containers/home/home';
 import { PrivateRoute } from '../../PrivateRoute';
+
+import Home from '../../containers/home/home';
 import userManage from '../../containers/user/user-manage/user-manage';
+
+// Lazy loading approach - Beeter Performance
+const UserList = lazy(() => import('../../containers/user/user-list/user-list'));
 
 class AuthLayout extends Component {
     constructor(props) {
@@ -28,13 +31,15 @@ class AuthLayout extends Component {
                     </div>
                 </header>
                 <div className="app-body">
+                    <Suspense fallback={<div>Component loading...</div>}>
 
-                    <Switch>
-                        <Route path="/home" name="Homw" component={Home} />
-                        <PrivateRoute path="/users" name="User List" component={UserList} />
-                        <PrivateRoute path="/user/:id" name="User Manage" component={userManage} />
-                        <Redirect from="/" to="/home" />
-                    </Switch>
+                        <Switch>
+                            <Route path="/home" name="Homw" component={Home} />
+                            <PrivateRoute path="/users" name="User List" component={UserList} />
+                            <PrivateRoute path="/user/:id" name="User Manage" component={userManage} />
+                            <Redirect from="/" to="/home" />
+                        </Switch>
+                    </Suspense>
 
                 </div>
                 <div className="app-footer">

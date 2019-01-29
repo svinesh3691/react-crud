@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { selectUser } from "../../../actions/userAction";
+import { updateUser } from "../../../actions/userAction";
 
 class UserManage extends React.Component {
 
@@ -9,19 +10,22 @@ class UserManage extends React.Component {
     }
 
     componentDidMount() {
-        console.log('User Manage', this.props.match.params.id)
-        this.props.dispatch(selectUser(this.props.match.params.id));
+        this.id = this.props.match.params.id;
+        this.props.dispatch(selectUser(this.id));
 
     }
 
     handleChange(e) {
-        console.log('handle change called', e.target.value);
         this.props.user.first_name = e.target.value;
     }
 
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.getFirstName.value);
+        // I am nt getting, how to redirect after successful api call :-)
+        this.props.dispatch(updateUser(this.id, this.getFirstName.value, () => {
+            this.props.history.push('/users');
+        }));
     }
 
     render() {

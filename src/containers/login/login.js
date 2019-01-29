@@ -13,7 +13,7 @@ class Login extends Component {
         e.preventDefault();
         if (this.state.username === 'svinesh3691' && this.state.password === 'secret') {
             localStorage.setItem('user', this.state.username);
-            this.props.history.push('/user')
+            this.props.history.push('/users')
         } else {
             alert('Wrong username/password');
         }
