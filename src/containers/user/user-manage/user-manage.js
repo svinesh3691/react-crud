@@ -12,7 +12,11 @@ class UserManage extends React.Component {
     componentDidMount() {
         this.id = this.props.match.params.id;
         this.props.dispatch(selectUser(this.id));
+    }
 
+    // Dont use this... Will be obsolete soon
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        console.log('Next props', nextProps);
     }
 
     handleChange(e) {
@@ -22,10 +26,10 @@ class UserManage extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.getFirstName.value);
-        // I am nt getting, how to redirect after successful api call :-)
-        this.props.dispatch(updateUser(this.id, this.getFirstName.value, () => {
-            this.props.history.push('/users');
-        }));
+
+        this.props.dispatch(updateUser(this.id, this.getFirstName.value)).then(() => {
+            // this.props.history.push('/users');
+        });
     }
 
     render() {

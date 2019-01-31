@@ -51,13 +51,14 @@ export default function userReducer(state = initialState, action) {
     case 'SELECT_USER_FAILURE':
       return {
         ...state,
-        select_error : action.payload.error,
+        select_error: action.payload.error,
         selecting: false,
-        selection: false
+        selected: false
       };
 
-
-
+    case 'USER_UPDATED':
+      console.log('User updated')
+      return {...state, selected:false};
 
 
     default:
